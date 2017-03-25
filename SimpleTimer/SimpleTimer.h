@@ -90,7 +90,7 @@ private:
     // deferred call constants
     const static int DEFCALL_DONTRUN = 0;       // don't call the callback function
     const static int DEFCALL_RUNONLY = 1;       // call the callback function but don't delete the timer
-    const static int DEFCALL_RUNANDDEL = 2;      // call the callback function and delete the timer
+    const static int DEFCALL_RUNANDDEL = 2;     // call the callback function and delete the timer
 
     // find the first available slot
     int findFirstFreeSlot();
