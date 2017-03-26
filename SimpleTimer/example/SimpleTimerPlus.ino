@@ -68,13 +68,13 @@ void setPin(void *args)
 
   if (state == LOW)
     {
-    digitalWrite(16, LOW);
+    digitalWrite(13, LOW);
     state = HIGH;           // set the pin high
     duration = 100;         // after 100 mSec
     }
   else
     {
-    digitalWrite(16, HIGH);
+    digitalWrite(13, HIGH);
     state = LOW;            // set the pin low
     duration = 900;         // after 900 mSec
     }
