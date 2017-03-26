@@ -4,7 +4,7 @@
 SimpleTimer timer;
 
 // a function to be executed periodically
-void repeatMe() {
+void repeatMe(void *) {
     Serial.print("Uptime (s): ");
     Serial.println(millis() / 1000);
 }
