@@ -5,6 +5,9 @@
  * Author: mromani@ottotecnica.com
  * Copyright (c) 2010 OTTOTECNICA Italy
  *
+ * Callback function parameters added & compiler warnings
+ * removed by Bill Knight <billk@rosw.com> 20March2017
+ *
  * This library is free software; you can redistribute it
  * and/or modify it under the terms of the GNU Lesser
  * General Public License as published by the Free Software
@@ -40,6 +43,7 @@ SimpleTimer::SimpleTimer() {
         callbacks[i] = 0;                   // if the callback pointer is zero, the slot is free, i.e. doesn't "contain" any timer
         prev_millis[i] = current_millis;
         numRuns[i] = 0;
+		params[i] = NULL;
     }
 
     numTimers = 0;
@@ -97,11 +101,11 @@ void SimpleTimer::run() {
                 break;
 
             case DEFCALL_RUNONLY:
-                (*callbacks[i])();
+                (*callbacks[i])(params[i]);
                 break;
 
             case DEFCALL_RUNANDDEL:
-                (*callbacks[i])();
+                (*callbacks[i])(params[i]);
                 deleteTimer(i);
                 break;
         }
@@ -131,7 +135,7 @@ int SimpleTimer::findFirstFreeSlot() {
 }
 
 
-int SimpleTimer::setTimer(long d, timer_callback f, int n) {
+int SimpleTimer::setTimer(unsigned long d, timer_callback f, void* p, unsigned n) {
     int freeTimer;
 
     freeTimer = findFirstFreeSlot();
@@ -145,6 +149,7 @@ int SimpleTimer::setTimer(long d, timer_callback f, int n) {
 
     delays[freeTimer] = d;
     callbacks[freeTimer] = f;
+	params[freeTimer] = p;
     maxNumRuns[freeTimer] = n;
     enabled[freeTimer] = true;
     prev_millis[freeTimer] = elapsed();
@@ -155,17 +160,17 @@ int SimpleTimer::setTimer(long d, timer_callback f, int n) {
 }
 
 
-int SimpleTimer::setInterval(long d, timer_callback f) {
-    return setTimer(d, f, RUN_FOREVER);
+int SimpleTimer::setInterval(unsigned long d, timer_callback f, void* p) {
+    return setTimer(d, f, p, RUN_FOREVER);
 }
 
 
-int SimpleTimer::setTimeout(long d, timer_callback f) {
-    return setTimer(d, f, RUN_ONCE);
+int SimpleTimer::setTimeout(unsigned long d, timer_callback f, void* p) {
+    return setTimer(d, f, p, RUN_ONCE);
 }
 
 
-void SimpleTimer::deleteTimer(int timerId) {
+void SimpleTimer::deleteTimer(unsigned timerId) {
     // ignore invalid argument
     if (timerId >= MAX_TIMERS) {
         return;
@@ -180,6 +185,7 @@ void SimpleTimer::deleteTimer(int timerId) {
     // specified slot is already empty
     if (callbacks[timerId] != NULL) {
         callbacks[timerId] = 0;
+        params[timerId] = NULL;
         enabled[timerId] = false;
         toBeCalled[timerId] = DEFCALL_DONTRUN;
         delays[timerId] = 0;
@@ -192,7 +198,7 @@ void SimpleTimer::deleteTimer(int timerId) {
 
 
 // function contributed by code@rowansimms.com
-void SimpleTimer::restartTimer(int numTimer) {
+void SimpleTimer::restartTimer(unsigned numTimer) {
     // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
@@ -202,7 +208,7 @@ void SimpleTimer::restartTimer(int numTimer) {
 }
 
 
-boolean SimpleTimer::isEnabled(int numTimer) {
+boolean SimpleTimer::isEnabled(unsigned numTimer) {
     if (numTimer >= MAX_TIMERS) {
         return false;
     }
@@ -211,7 +217,7 @@ boolean SimpleTimer::isEnabled(int numTimer) {
 }
 
 
-void SimpleTimer::enable(int numTimer) {
+void SimpleTimer::enable(unsigned numTimer) {
     // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
@@ -221,7 +227,7 @@ void SimpleTimer::enable(int numTimer) {
 }
 
 
-void SimpleTimer::disable(int numTimer) {
+void SimpleTimer::disable(unsigned numTimer) {
     // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
@@ -231,7 +237,7 @@ void SimpleTimer::disable(int numTimer) {
 }
 
 
-void SimpleTimer::toggle(int numTimer) {
+void SimpleTimer::toggle(unsigned numTimer) {
     // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
@@ -241,6 +247,6 @@ void SimpleTimer::toggle(int numTimer) {
 }
 
 
-int SimpleTimer::getNumTimers() {
+unsigned SimpleTimer::getNumTimers() {
     return numTimers;
 }
