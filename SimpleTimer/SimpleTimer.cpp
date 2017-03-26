@@ -149,7 +149,7 @@ int SimpleTimer::setTimer(unsigned long d, timer_callback f, unsigned n, void* p
 
     delays[freeTimer] = d;
     callbacks[freeTimer] = f;
-	  params[freeTimer] = p;
+	params[freeTimer] = p;
     maxNumRuns[freeTimer] = n;
     enabled[freeTimer] = true;
     prev_millis[freeTimer] = elapsed();
