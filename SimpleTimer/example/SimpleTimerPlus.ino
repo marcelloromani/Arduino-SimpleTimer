@@ -96,7 +96,7 @@ void setup() {
   timer.setInterval(15000, RepeatTask, NULL);
   timer.setTimeout(10000, OnceOnlyTask, NULL);
   timer.setInterval(1000, DigitalClockDisplay, NULL);
-  timer.setTimer(1200, TenTimesTask, NULL, 10);
+  timer.setTimer(1200, TenTimesTask, 10, NULL);
   pinMode(16, OUTPUT);
   digitalWrite(16, LOW);
   // Set the pin HIGH after 100 mSec
