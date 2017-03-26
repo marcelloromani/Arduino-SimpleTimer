@@ -135,7 +135,7 @@ int SimpleTimer::findFirstFreeSlot() {
 }
 
 
-int SimpleTimer::setTimer(unsigned long d, timer_callback f, void* p, unsigned n) {
+int SimpleTimer::setTimer(unsigned long d, timer_callback f, unsigned n, void* p) {
     int freeTimer;
 
     freeTimer = findFirstFreeSlot();
@@ -149,7 +149,7 @@ int SimpleTimer::setTimer(unsigned long d, timer_callback f, void* p, unsigned n
 
     delays[freeTimer] = d;
     callbacks[freeTimer] = f;
-	params[freeTimer] = p;
+	  params[freeTimer] = p;
     maxNumRuns[freeTimer] = n;
     enabled[freeTimer] = true;
     prev_millis[freeTimer] = elapsed();
@@ -160,13 +160,13 @@ int SimpleTimer::setTimer(unsigned long d, timer_callback f, void* p, unsigned n
 }
 
 
-int SimpleTimer::setInterval(unsigned long d, timer_callback f, void* p) {
-    return setTimer(d, f, p, RUN_FOREVER);
+int SimpleTimer::setInterval(unsigned long d, timer_callback f, void* p ) {
+    return setTimer(d, f, RUN_FOREVER, p);
 }
 
 
 int SimpleTimer::setTimeout(unsigned long d, timer_callback f, void* p) {
-    return setTimer(d, f, p, RUN_ONCE);
+    return setTimer(d, f, RUN_ONCE, p);
 }
 
 

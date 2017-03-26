@@ -57,7 +57,7 @@ public:
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds forever
 	// returns the timer number (numTimer) on success or
 	// -1 on failure (f == NULL) or no free timers
-    int setInterval(unsigned long d, timer_callback f, void* p);
+    int setInterval(unsigned long d, timer_callback f, void* p = NULL);
 
     // Timer will call function 'f' with parameter 'p' after 'd' milliseconds one time
 	// returns the timer number (numTimer) on success or
@@ -67,7 +67,7 @@ public:
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds 'n' times
 	// returns the timer number (numTimer) on success or
 	// -1 on failure (f == NULL) or no free timers
-    int setTimer(unsigned long d, timer_callback f, void* p, unsigned n);
+    int setTimer(unsigned long d, timer_callback f, unsigned n, void* p = NULL);
 
     // destroy the specified timer
     void deleteTimer(unsigned numTimer);
