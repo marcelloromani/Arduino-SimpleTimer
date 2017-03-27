@@ -62,7 +62,7 @@ public:
     // Timer will call function 'f' with parameter 'p' after 'd' milliseconds one time
 	// returns the timer number (numTimer) on success or
 	// -1 on failure (f == NULL) or no free timers
-    int setTimeout(unsigned long d, timer_callback f, void* p);
+    int setTimeout(unsigned long d, timer_callback f, void* p = NULL);
 
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds 'n' times
 	// returns the timer number (numTimer) on success or
