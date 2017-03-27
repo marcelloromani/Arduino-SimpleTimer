@@ -139,7 +139,7 @@ int SimpleTimer::setTimer(long d, timer_callback f, int n) {
         return -1;
     }
 
-    if (f == NULL || n == 0) {
+    if (f == NULL) {
         return -1;
     }
 
