@@ -145,7 +145,7 @@ int SimpleTimer::setupTimer(unsigned long d, void* f, void* p, boolean h, unsign
         return -1;
     }
 
-    if (f == NULL || n == 0) {
+    if (f == NULL) {
         return -1;
     }
 
