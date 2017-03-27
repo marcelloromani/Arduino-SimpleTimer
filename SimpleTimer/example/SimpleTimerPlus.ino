@@ -68,21 +68,13 @@ void setPin(void *args)
 
   if (state == LOW)
     {
-<<<<<<< HEAD
     digitalWrite(13, LOW);
-=======
-    digitalWrite(16, LOW);
->>>>>>> Commit new version by Bill Knight <billk@rosw.com>
     state = HIGH;           // set the pin high
     duration = 100;         // after 100 mSec
     }
   else
     {
-<<<<<<< HEAD
     digitalWrite(13, HIGH);
-=======
-    digitalWrite(16, HIGH);
->>>>>>> Commit new version by Bill Knight <billk@rosw.com>
     state = LOW;            // set the pin low
     duration = 900;         // after 900 mSec
     }
@@ -104,11 +96,7 @@ void setup() {
   timer.setInterval(15000, RepeatTask, NULL);
   timer.setTimeout(10000, OnceOnlyTask, NULL);
   timer.setInterval(1000, DigitalClockDisplay, NULL);
-<<<<<<< HEAD
   timer.setTimer(1200, TenTimesTask, 10, NULL);
-=======
-  timer.setTimer(1200, TenTimesTask, NULL, 10);
->>>>>>> Commit new version by Bill Knight <billk@rosw.com>
   pinMode(16, OUTPUT);
   digitalWrite(16, LOW);
   // Set the pin HIGH after 100 mSec
@@ -118,8 +106,4 @@ void setup() {
 void loop() {
   // this is where the "polling" occurs
   timer.run();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> Commit new version by Bill Knight <billk@rosw.com>
