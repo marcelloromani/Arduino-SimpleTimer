@@ -10,19 +10,19 @@ unsigned int c2 = 0;
 
 bool all_done = false;
 
-void dontExecute() {
+void dontExecute(void *) {
     c0++;
 }
 
-void callMeOnce() {
+void callMeOnce(void *) {
     c1++;
 }
 
-void callMeTwice() {
+void callMeTwice(void *) {
     c2++;
 }
 
-void checkResults() {
+void checkResults(void *) {
     assertEqual(c0, 0);
     assertEqual(c1, 1);
     assertEqual(c2, 2);
