@@ -92,25 +92,16 @@ void SimpleTimer::run() {
     }
 
     for (i = 0; i < MAX_TIMERS; i++) {
-        switch(timer[i].toBeCalled) {
-            case DEFCALL_DONTRUN:
-                break;
+        if (timer[i].toBeCalled == DEFCALL_DONTRUN)
+            continue;
 
-            case DEFCALL_RUNONLY:
-                if (timer[i].hasParam)
-                    (*(timer_callback_p)timer[i].callback)(timer[i].param);
-                else
-                    (*(timer_callback)timer[i].callback)();
-                break;
+        if (timer[i].hasParam)
+            (*(timer_callback_p)timer[i].callback)(timer[i].param);
+        else
+            (*(timer_callback)timer[i].callback)();
 
-            case DEFCALL_RUNANDDEL:
-                if (timer[i].hasParam)
-                    (*(timer_callback_p)timer[i].callback)(timer[i].param);
-                else
-                    (*(timer_callback)timer[i].callback)();
-                deleteTimer(i);
-                break;
-        }
+        if (timer[i].toBeCalled == DEFCALL_RUNANDDEL)
+            deleteTimer(i);
     }
 }
 
@@ -118,15 +109,13 @@ void SimpleTimer::run() {
 // find the first available slot
 // return -1 if none found
 int SimpleTimer::findFirstFreeSlot() {
-    int i;
-
     // all slots are used
     if (numTimers >= MAX_TIMERS) {
         return -1;
     }
 
     // return the first slot with no callback (i.e. free)
-    for (i = 0; i < MAX_TIMERS; i++) {
+    for (int i = 0; i < MAX_TIMERS; i++) {
         if (timer[i].callback == NULL) {
             return i;
         }

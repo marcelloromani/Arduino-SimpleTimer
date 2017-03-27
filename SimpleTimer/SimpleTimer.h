@@ -126,13 +126,13 @@ private:
 
     typedef struct {
       unsigned long prev_millis;        // value returned by the millis() function in the previous run() call
-      void* callback;                   // pointer to the callback functions
+      void* callback;                   // pointer to the callback function
       void* param;                      // function parameter
-      boolean hasParam;                 // timer callback has parameter
+      boolean hasParam;                 // true if callback takes a parameter
       unsigned long delay;              // delay value
       unsigned maxNumRuns;              // number of runs to be executed
       unsigned numRuns;                 // number of executed runs
-      boolean enabled;                  // enabled or not
+      boolean enabled;                  // true if enabled
       unsigned toBeCalled;              // deferred function call (sort of) - N.B.: only used in run()
     } timer_t;
 
