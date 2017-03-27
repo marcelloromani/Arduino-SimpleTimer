@@ -171,6 +171,7 @@ int SimpleTimer::setTimeout(unsigned long d, timer_callback f, void* p) {
 
 
 void SimpleTimer::deleteTimer(unsigned timerId) {
+    // ignore invalid argument
     if (timerId >= MAX_TIMERS) {
         return;
     }
@@ -198,6 +199,7 @@ void SimpleTimer::deleteTimer(unsigned timerId) {
 
 // function contributed by code@rowansimms.com
 void SimpleTimer::restartTimer(unsigned numTimer) {
+    // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
     }
@@ -216,6 +218,7 @@ boolean SimpleTimer::isEnabled(unsigned numTimer) {
 
 
 void SimpleTimer::enable(unsigned numTimer) {
+    // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
     }
@@ -225,6 +228,7 @@ void SimpleTimer::enable(unsigned numTimer) {
 
 
 void SimpleTimer::disable(unsigned numTimer) {
+    // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
     }
@@ -234,6 +238,7 @@ void SimpleTimer::disable(unsigned numTimer) {
 
 
 void SimpleTimer::toggle(unsigned numTimer) {
+    // ignore invalid argument
     if (numTimer >= MAX_TIMERS) {
         return;
     }
