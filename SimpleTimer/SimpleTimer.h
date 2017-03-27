@@ -36,7 +36,8 @@
 #include <WProgram.h>
 #endif
 
-typedef void (*timer_callback)(void *);
+typedef void (*timer_callback)(void);
+typedef void (*timer_callback_p)(void *);
 
 class SimpleTimer {
 
@@ -54,20 +55,35 @@ public:
     // this function must be called inside loop()
     void run();
 
+    // Timer will call function 'f' every 'd' milliseconds forever
+    // returns the timer number (numTimer) on success or
+    // -1 on failure (f == NULL) or no free timers
+    int setInterval(unsigned long d, timer_callback f);
+
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds forever
-	// returns the timer number (numTimer) on success or
-	// -1 on failure (f == NULL) or no free timers
-    int setInterval(unsigned long d, timer_callback f, void* p = NULL);
+    // returns the timer number (numTimer) on success or
+    // -1 on failure (f == NULL) or no free timers
+    int setInterval(unsigned long d, timer_callback_p f, void* p);
+
+    // Timer will call function 'f' after 'd' milliseconds one time
+    // returns the timer number (numTimer) on success or
+    // -1 on failure (f == NULL) or no free timers
+    int setTimeout(unsigned long d, timer_callback f);
 
     // Timer will call function 'f' with parameter 'p' after 'd' milliseconds one time
-	// returns the timer number (numTimer) on success or
-	// -1 on failure (f == NULL) or no free timers
-    int setTimeout(unsigned long d, timer_callback f, void* p = NULL);
+    // returns the timer number (numTimer) on success or
+    // -1 on failure (f == NULL) or no free timers
+    int setTimeout(unsigned long d, timer_callback_p f, void* p);
+
+    // Timer will call function 'f' every 'd' milliseconds 'n' times
+    // returns the timer number (numTimer) on success or
+    // -1 on failure (f == NULL) or no free timers
+    int setTimer(unsigned long d, timer_callback f, unsigned n);
 
     // Timer will call function 'f' with parameter 'p' every 'd' milliseconds 'n' times
-	// returns the timer number (numTimer) on success or
-	// -1 on failure (f == NULL) or no free timers
-    int setTimer(unsigned long d, timer_callback f, unsigned n, void* p = NULL);
+    // returns the timer number (numTimer) on success or
+    // -1 on failure (f == NULL) or no free timers
+    int setTimer(unsigned long d, timer_callback_p f, void* p, unsigned n);
 
     // destroy the specified timer
     void deleteTimer(unsigned numTimer);
@@ -100,33 +116,27 @@ private:
     const static int DEFCALL_RUNONLY = 1;       // call the callback function but don't delete the timer
     const static int DEFCALL_RUNANDDEL = 2;     // call the callback function and delete the timer
 
+    // low level function to initialize and enable a new timer
+    // returns the timer number (numTimer) on success or
+    // -1 on failure (f == NULL) or no free timers
+    int setupTimer(unsigned long d, void* f, void* p, boolean h, unsigned n);
+
     // find the first available slot
     int findFirstFreeSlot();
 
-    // value returned by the millis() function
-    // in the previous run() call
-    unsigned long prev_millis[MAX_TIMERS];
+    typedef struct {
+      unsigned long prev_millis;        // value returned by the millis() function in the previous run() call
+      void* callback;                   // pointer to the callback functions
+      void* param;                      // function parameter
+      boolean hasParam;                 // timer callback has parameter
+      unsigned long delay;              // delay value
+      unsigned maxNumRuns;              // number of runs to be executed
+      unsigned numRuns;                 // number of executed runs
+      boolean enabled;                  // enabled or not
+      unsigned toBeCalled;              // deferred function call (sort of) - N.B.: only used in run()
+    } timer_t;
 
-    // pointers to the callback functions
-    timer_callback callbacks[MAX_TIMERS];
-
-	// function parameters
-	void *params[MAX_TIMERS];
-
-    // delay values
-    unsigned long delays[MAX_TIMERS];
-
-    // number of runs to be executed for each timer
-    unsigned maxNumRuns[MAX_TIMERS];
-
-    // number of executed runs for each timer
-    unsigned numRuns[MAX_TIMERS];
-
-    // which timers are enabled
-    boolean enabled[MAX_TIMERS];
-
-    // deferred function call (sort of) - N.B.: this array is only used in run()
-    unsigned toBeCalled[MAX_TIMERS];
+    timer_t timer[MAX_TIMERS];
 
     // actual number of timers in use
     unsigned numTimers;
