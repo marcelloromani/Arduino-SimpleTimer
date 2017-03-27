@@ -4,16 +4,10 @@
 // the timer object
 SimpleTimer timer;
 
-unsigned int c0 = 0;
 unsigned int c1 = 0;
 unsigned int c2 = 0;
 
 bool all_done = false;
-
-void dontExecute() {
-    Serial.println("dontExecute");
-    c0++;
-}
 
 void callMeOnce() {
     Serial.println("callMeOnce");
@@ -27,7 +21,6 @@ void callMeTwice() {
 
 void checkResults() {
     Serial.println("checkResults");
-    assertEqual(c0, 0);
     assertEqual(c1, 1);
     assertEqual(c2, 2);
 
@@ -37,9 +30,6 @@ void checkResults() {
 void setup() {
     Serial.begin(9600);
 
-    assertEqual(timer.getNumTimers(), 0);
-
-    timer.setTimer(10, dontExecute, 0);
     assertEqual(timer.getNumTimers(), 0);
 
     timer.setTimer(10, callMeOnce, 1);
