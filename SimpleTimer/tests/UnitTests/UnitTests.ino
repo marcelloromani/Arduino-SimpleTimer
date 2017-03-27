@@ -11,18 +11,22 @@ unsigned int c2 = 0;
 bool all_done = false;
 
 void dontExecute() {
+    Serial.println("dontExecute");
     c0++;
 }
 
 void callMeOnce() {
+    Serial.println("callMeOnce");
     c1++;
 }
 
 void callMeTwice() {
+    Serial.println("callMeTwice");
     c2++;
 }
 
 void checkResults() {
+    Serial.println("checkResults");
     assertEqual(c0, 0);
     assertEqual(c1, 1);
     assertEqual(c2, 2);
