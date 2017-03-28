@@ -11,7 +11,6 @@ void repeatMe() {
 
 void setup() {
     Serial.begin(9600);
-    Serial.println("Starting");
     timer.setInterval(1000, repeatMe);
 }
 
