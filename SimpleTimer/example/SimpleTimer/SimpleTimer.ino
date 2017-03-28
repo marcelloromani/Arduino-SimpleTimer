@@ -12,8 +12,7 @@ void repeatMe() {
 void setup() {
     Serial.begin(9600);
     Serial.println("Starting");
-    timer.setTimer(500, repeatMe, 0);
-    //timer.setInterval(1000, repeatMe, 1);
+    timer.setTimer(1000, repeatMe);
 }
 
 void loop() {
