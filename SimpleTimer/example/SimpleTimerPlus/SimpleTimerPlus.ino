@@ -17,6 +17,9 @@
 // although there is little point in doing so.
 SimpleTimer timer;
 
+// Pin to toggle
+const unsigned int PIN = 13;
+
 // function to be called repeatedly
 void RepeatTask(void) {
   Serial.println("15 second timer");        
@@ -74,13 +77,13 @@ void setPin(void* args)
 
   if (state == LOW)
     {
-    digitalWrite(13, LOW);
+    digitalWrite(PIN, LOW);
     state = HIGH;           // set the pin high
     duration = 100;         // after 100 mSec
     }
   else
     {
-    digitalWrite(13, HIGH);
+    digitalWrite(PIN, HIGH);
     state = LOW;            // set the pin low
     duration = 900;         // after 900 mSec
     }
@@ -103,8 +106,8 @@ void setup() {
   timer.setTimeout(10000, OnceOnlyTask);
   timer.setInterval(1000, DigitalClockDisplay);
   timer.setTimer(1200, TenTimesTask, 10);
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
+  pinMode(PIN, OUTPUT);
+  digitalWrite(PIN, LOW);
   // Set the pin HIGH after 100 mSec
   timer.setTimeout(100, setPin, (void *)HIGH);
 }
