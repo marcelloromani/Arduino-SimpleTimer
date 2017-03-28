@@ -61,7 +61,13 @@ void printDigits(int digits) {
   Serial.print(digits);
 }
 
-void setPin(void *args)
+// This callback function takes an arg.  The arg can be cast to a value
+// as in this example or cast to a pointer to a structure or even a
+// function.  If a structure, it must be present in memory when the
+// callback fuction is called. In other words it must be a global or
+// declared 'static' and not a structure local to the function that
+// created the timer such as setup() or loop().
+void setPin(void* args)
 {
   int state = (int)args;
   unsigned long duration;
